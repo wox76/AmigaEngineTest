@@ -5,16 +5,18 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    # CORREZIONE DEFINITIVA: Usiamo il registro ufficiale di GitHub
-    container: ghcr.io/bebbo/amiga-gcc:latest
+    # USIAMO QUESTA: È un mirror stabile specifico per CI/CD
+    container: ghcr.io/prb28/amiga-gcc:latest
 
     steps:
     - name: Scarica il codice
       uses: actions/checkout@v4
 
     - name: Compila il gioco
-      # Compiliamo!
-      run: m68k-amigaos-gcc main.c -o engine.exe -noixemul -Os
+      # Il comando è standard.
+      # -noixemul: Niente emulazione Unix
+      # -fomit-frame-pointer: Ottimizzazione extra
+      run: m68k-amigaos-gcc main.c -o engine.exe -noixemul -Os -fomit-frame-pointer
 
     - name: Salva l'eseguibile
       uses: actions/upload-artifact@v4
