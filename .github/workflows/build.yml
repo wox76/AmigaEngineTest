@@ -5,17 +5,16 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    # USIAMO QUESTA: È un mirror stabile specifico per CI/CD
-    container: ghcr.io/prb28/amiga-gcc:latest
+    # USIAMO L'IMMAGINE UFFICIALE AMIGADEV
+    # Nota il tag specifico: non è 'latest', ma 'm68k-amigaos'
+    container: amigadev/crosstools:m68k-amigaos
 
     steps:
     - name: Scarica il codice
       uses: actions/checkout@v4
 
     - name: Compila il gioco
-      # Il comando è standard.
-      # -noixemul: Niente emulazione Unix
-      # -fomit-frame-pointer: Ottimizzazione extra
+      # Il compilatore qui si chiama esattamente così
       run: m68k-amigaos-gcc main.c -o engine.exe -noixemul -Os -fomit-frame-pointer
 
     - name: Salva l'eseguibile
