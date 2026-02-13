@@ -5,16 +5,16 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    # Questa immagine è pubblica e testata
-    container: walkero/amiga-gcc:latest
+    # CORREZIONE DEFINITIVA: Usiamo il registro ufficiale di GitHub
+    container: ghcr.io/bebbo/amiga-gcc:latest
 
     steps:
     - name: Scarica il codice
       uses: actions/checkout@v4
 
     - name: Compila il gioco
-      # Aggiungo -s per rimuovere i simboli di debug (rende il file più piccolo)
-      run: m68k-amigaos-gcc main.c -o engine.exe -noixemul -Os -s
+      # Compiliamo!
+      run: m68k-amigaos-gcc main.c -o engine.exe -noixemul -Os
 
     - name: Salva l'eseguibile
       uses: actions/upload-artifact@v4
