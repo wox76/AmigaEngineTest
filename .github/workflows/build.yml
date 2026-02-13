@@ -5,13 +5,15 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: bebbo/amiga-gcc
+    # CORREZIONE: Usiamo un'immagine pubblica esistente
+    container: grahamevans/amiga-gcc:latest
 
     steps:
     - name: Scarica il codice
       uses: actions/checkout@v3
 
     - name: Compila il gioco
+      # Il comando rimane lo stesso, il compilatore dentro è sempre quello di Bebbo
       run: m68k-amigaos-gcc main.c -o engine.exe -noixemul -Os
 
     - name: Salva l'eseguibile
