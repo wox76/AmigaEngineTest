@@ -1,0 +1,21 @@
+name: Compila per Amiga
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: bebbo/amiga-gcc
+
+    steps:
+    - name: Scarica il codice
+      uses: actions/checkout@v3
+
+    - name: Compila il gioco
+      run: m68k-amigaos-gcc main.c -o engine.exe -noixemul -Os
+
+    - name: Salva l'eseguibile
+      uses: actions/upload-artifact@v4
+      with:
+        name: MioGiocoAmiga
+        path: engine.exe
